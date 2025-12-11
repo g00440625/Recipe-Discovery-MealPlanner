@@ -1,51 +1,56 @@
-﻿namespace RecipeDiscoveryApp
+﻿using PantryBlissClone.Models;   
+using PantryBlissClone.Services; 
+using Microsoft.Maui.Controls;
+
+namespace PantryBlissClone;
+
+public partial class MainPage : ContentPage
 {
-    public partial class HomePage : ContentPage
-    {
-        public ObservableCollection<Recipe> Recipes { get; set; }
+	private TheMealDbService _service = new TheMealDbService();
+	public MainPage()
+	{
+		InitializeComponent();
+	}
 
-        public HomePage()
-        {
-            InitializeComponent();
-            Recipes = new ObservableCollection<Recipe>();
-            BindingContext = this;
-        }
+	// Search recipes by name
+	private async void OnSearchClicked(object sender, EventArgs e)
+	{
+		if (string.IsNullOrWhiteSpace(SearchEntry.Text))
+			return;
 
-        private async void OnSearchButtonPressed(object sender, System.EventArgs e)
-        {
-            string query = SearchBar.Text;
-            if (!string.IsNullOrWhiteSpace(query))
-            {
-                await SearchRecipes(query);
-            }
-        }
+		try
+		{
+			var recipes = await _service.SearchByNameAsync(SearchEntry.Text);
+			RecipeCollection.ItemsSource = recipes;
+		}
+		catch (Exception ex)
+		{
+			await DisplayAlert("Error", ex.Message, "OK");
+		}
+	}
 
-        private async Task SearchRecipes(string query)
-        {
-            var client = new HttpClient();
-            var response = await client.GetStringAsync($"https://www.themealdb.com/api/json/v1/1/search.php?s={query}");
-            var result = JsonConvert.DeserializeObject<RecipeResponse>(response);
+	// Show a random recipe
+	private async void OnRandomClicked(object sender, EventArgs e)
+	{
+		try
+		{
+			var recipes = await _service.RandomRecipeAsync();
+			RecipeCollection.ItemsSource = recipes;
+		}
+		catch (Exception ex)
+		{
+			await DisplayAlert("Error", ex.Message, "OK");
+		}
+	}
 
-            Recipes.Clear();
+	// Navigate to Recipe Detail Page
+	private async void OnRecipeSelected(object sender, SelectionChangedEventArgs e)
+	{
+		var selectedRecipe = e.CurrentSelection.FirstOrDefault() as Recipe;
+		if (selectedRecipe == null)
+			return;
 
-            if (result.Meals != null)
-            {
-                foreach (var recipe in result.Meals)
-                {
-                    Recipes.Add(recipe);
-                }
-            }
-        }
-    }
-
-    public class Recipe
-    {
-        public string StrMeal { get; set; }
-        public string StrMealThumb { get; set; }
-    }
-
-    public class RecipeResponse
-    {
-        public List<Recipe> Meals { get; set; }
-    }
+		await Navigation.PushAsync(new RecipeDetailPage(selectedRecipe));
+		RecipeCollection.SelectedItem = null; // deselect item
+	}
 }

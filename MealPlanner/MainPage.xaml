@@ -1,33 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="RecipeDiscoveryApp.HomePage"
-             Title="Recipe Discovery">
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MealPlanner"
+             Title="Recipe Browser">
 
-    <StackLayout Padding="20">
-        <Label Text="Welcome to Recipe Discovery!"
-               FontSize="24"
-               HorizontalOptions="CenterAndExpand" />
+	<StackLayout Padding="10" Spacing="10">
 
-        <!-- Search Bar -->
-        <SearchBar x:Name="SearchBar"
-                   Placeholder="Search for recipes..."
-                   SearchButtonPressed="OnSearchButtonPressed" />
+		<!-- Search Section -->
+		<StackLayout Orientation="Horizontal" Spacing="10">
+			<Entry x:Name="SearchEntry" Placeholder="Search recipe..." HorizontalOptions="FillAndExpand"/>
+			<Button Text="Search" Clicked="OnSearchClicked"/>
+		</StackLayout>
 
-        <!-- Recipe Results List -->
-        <CollectionView x:Name="RecipeListView"
-                        ItemsSource="{Binding Recipes}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="10" BorderColor="Gray" CornerRadius="10">
-                        <StackLayout>
-                            <Image Source="{Binding StrMealThumb}" HeightRequest="150"/>
-                            <Label Text="{Binding StrMeal}" FontSize="18" HorizontalOptions="Center" />
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </StackLayout>
+		<!-- Random Recipe Button -->
+		<Button Text="Random Recipe" Clicked="OnRandomClicked"/>
 
+		<!-- Recipe Results -->
+		<CollectionView x:Name="RecipeCollection" SelectionMode="Single" SelectionChanged="OnRecipeSelected">
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<Frame Padding="5" Margin="5" BorderColor="Gray" CornerRadius="10">
+						<StackLayout>
+							<Image Source="{Binding ImageUrl}" HeightRequest="120" Aspect="AspectFill"/>
+							<Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"/>
+							<Label Text="{Binding Category}" FontSize="14" TextColor="Gray"/>
+						</StackLayout>
+					</Frame>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+
+	</StackLayout>
 </ContentPage>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MealPlanner.Pages.ShoppingListPage"
+             Title="Shopping List">
+	<VerticalStackLayout Padding="15" Spacing="10">
+
+		<Label Text="🛒 Shopping List" FontSize="20" FontAttributes="Bold" />
+
+		<CollectionView x:Name="ItemsCollectionView" SelectionMode="None">
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<HorizontalStackLayout Padding="10" Spacing="10" VerticalOptions="Center">
+						<Label Text="{Binding Name}" VerticalOptions="CenterAndExpand" />
+						<CheckBox IsChecked="{Binding IsChecked}" HorizontalOptions="End" />
+					</HorizontalStackLayout>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+
+		<Button Text="Done" Clicked="OnDoneClicked" HorizontalOptions="End" />
+
+	</VerticalStackLayout>
+</ContentPage>

@@ -1,33 +1,121 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MealPlanner"
-             Title="Recipe Browser">
+             x:Class="MealPlanner.MainPage"
+             Title="Meal Planner">
 
-	<StackLayout Padding="10" Spacing="10">
+	<ScrollView>
+		<VerticalStackLayout Padding="30" Spacing="20">
 
-		<!-- Search Section -->
-		<StackLayout Orientation="Horizontal" Spacing="10">
-			<Entry x:Name="SearchEntry" Placeholder="Search recipe..." HorizontalOptions="FillAndExpand"/>
-			<Button Text="Search" Clicked="OnSearchClicked"/>
-		</StackLayout>
+			<!-- App Header -->
+			<VerticalStackLayout Spacing="5" Margin="0,20,0,30">
+				<Label Text="🍽️"
+                       FontSize="48"
+                       HorizontalOptions="Center" />
+				<Label Text="Meal Planner"
+                       FontSize="32"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#333" />
+				<Label Text="Plan your meals, save favorites, shop smart"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       TextColor="Gray" />
+			</VerticalStackLayout>
 
-		<!-- Random Recipe Button -->
-		<Button Text="Random Recipe" Clicked="OnRandomClicked"/>
 
-		<!-- Recipe Results -->
-		<CollectionView x:Name="RecipeCollection" SelectionMode="Single" SelectionChanged="OnRecipeSelected">
-			<CollectionView.ItemTemplate>
-				<DataTemplate>
-					<Frame Padding="5" Margin="5" BorderColor="Gray" CornerRadius="10">
-						<StackLayout>
-							<Image Source="{Binding ImageUrl}" HeightRequest="120" Aspect="AspectFill"/>
-							<Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"/>
-							<Label Text="{Binding Category}" FontSize="14" TextColor="Gray"/>
-						</StackLayout>
-					</Frame>
-				</DataTemplate>
-			</CollectionView.ItemTemplate>
-		</CollectionView>
+			<!-- Browse Recipes Button -->
+			<Border Stroke="#4CAF50"
+                    StrokeThickness="2"
+                    BackgroundColor="#4CAF50"
+                    Padding="0"
+                    HeightRequest="70"
+                    StrokeShape="RoundRectangle 15">
+				<Border.Shadow>
+					<Shadow Brush="Black"
+                            Opacity="0.2"
+                            Radius="10"
+                            Offset="0,4" />
+				</Border.Shadow>
+				<Button Text="🔍 Browse Recipes"
+                        Clicked="OnBrowseRecipesClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+			</Border>
 
-	</StackLayout>
+			<!-- Meal Planner Button -->
+			<Border Stroke="#2196F3"
+                    StrokeThickness="2"
+                    BackgroundColor="#2196F3"
+                    Padding="0"
+                    HeightRequest="70"
+                    StrokeShape="RoundRectangle 15">
+				<Border.Shadow>
+					<Shadow Brush="Black"
+                            Opacity="0.2"
+                            Radius="10"
+                            Offset="0,4" />
+				</Border.Shadow>
+				<Button Text="📅 Weekly Meal Plan"
+                        Clicked="OnMealPlannerClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+			</Border>
+
+			<!-- Shopping List Button -->
+			<Border Stroke="#FF9800"
+                    StrokeThickness="2"
+                    BackgroundColor="#FF9800"
+                    Padding="0"
+                    HeightRequest="70"
+                    StrokeShape="RoundRectangle 15">
+				<Border.Shadow>
+					<Shadow Brush="Black"
+                            Opacity="0.2"
+                            Radius="10"
+                            Offset="0,4" />
+				</Border.Shadow>
+				<Button Text="🛒 Shopping List"
+                        Clicked="OnShoppingListClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+			</Border>
+
+			<!-- Random Recipe Button -->
+			<Border Stroke="#9C27B0"
+                    StrokeThickness="2"
+                    BackgroundColor="#9C27B0"
+                    Padding="0"
+                    HeightRequest="70"
+                    StrokeShape="RoundRectangle 15">
+				<Border.Shadow>
+					<Shadow Brush="Black"
+                            Opacity="0.2"
+                            Radius="10"
+                            Offset="0,4" />
+				</Border.Shadow>
+				<Button Text="🎲 Random Recipe"
+                        Clicked="OnRandomRecipeClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+			</Border>
+			<!-- Loading Indicator (hidden by default) -->
+			<ActivityIndicator x:Name="LoadingIndicator"
+                              IsRunning="False"
+                              IsVisible="False"
+                              Color="#9C27B0"
+                              Margin="0,20" />
+
+
+		</VerticalStackLayout>
+	</ScrollView>
+
 </ContentPage>

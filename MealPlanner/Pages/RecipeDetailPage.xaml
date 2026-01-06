@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MealPlanner.Pages.RecipeDetailPage"
+             Title="Recipe Details">
+
+	<ScrollView>
+		<VerticalStackLayout Padding="0" Spacing="0">
+
+			<!-- Recipe Image -->
+			<Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 0,0,20,20"
+                    HeightRequest="250">
+				<Image x:Name="RecipeImage"
+                       Aspect="AspectFill" />
+			</Border>
+
+			<!-- Recipe Content -->
+			<VerticalStackLayout Padding="20" Spacing="15">
+
+				<!-- Recipe Name -->
+				<Label x:Name="RecipeNameLabel"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       LineBreakMode="WordWrap" />
+
+				<!-- Category Badge -->
+				<Border BackgroundColor="#F0F0F0"
+                        Stroke="Transparent"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="12,6"
+                        HorizontalOptions="Start">
+					<HorizontalStackLayout Spacing="8">
+						<Label Text="??" FontSize="14" />
+						<Label x:Name="CategoryLabel"
+                               FontSize="14"
+                               TextColor="#555"
+                               FontAttributes="Bold" />
+					</HorizontalStackLayout>
+				</Border>
+
+				<!-- Action Buttons -->
+				<Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,15,0,0">
+
+					<!-- Favorite Button -->
+					<Border Grid.Column="0"
+                            x:Name="FavoriteButtonBorder"
+                            BackgroundColor="#E91E63"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 10"
+                            HeightRequest="50">
+						<Border.Shadow>
+							<Shadow Brush="Black" Opacity="0.2" Radius="8" Offset="0,2" />
+						</Border.Shadow>
+						<Button x:Name="FavoriteButton"
+                                Text="? Add to Favorites"
+                                Clicked="OnFavoriteClicked"
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                FontSize="13"
+                                FontAttributes="Bold" />
+					</Border>
+
+					<!-- Add to Meal Plan Button -->
+					<Border Grid.Column="1"
+                            BackgroundColor="#2196F3"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 10"
+                            HeightRequest="50">
+						<Border.Shadow>
+							<Shadow Brush="Black" Opacity="0.2" Radius="8" Offset="0,2" />
+						</Border.Shadow>
+						<Button Text="?? Add to Plan"
+                                Clicked="OnAddToMealPlanClicked"
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                FontSize="13"
+                                FontAttributes="Bold" />
+					</Border>
+				</Grid>
+
+				<!-- Ingredients Section -->
+				<Label Text="?? Ingredients"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       Margin="0,25,0,10" />
+
+				<Border BackgroundColor="#F8F8F8"
+                        Stroke="LightGray"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10"
+                        Padding="15">
+					<CollectionView x:Name="IngredientsListView">
+						<CollectionView.ItemTemplate>
+							<DataTemplate>
+								<Grid ColumnDefinitions="Auto,*" 
+                                      Padding="0,4"
+                                      ColumnSpacing="10">
+									<BoxView Grid.Column="0"
+                                             Color="#4CAF50"
+                                             WidthRequest="6"
+                                             HeightRequest="6"
+                                             CornerRadius="3"
+                                             VerticalOptions="Center"
+                                             Margin="0,0,4,0" />
+									<Label Grid.Column="1"
+                                           FontSize="15"
+                                           LineBreakMode="WordWrap">
+										<Label.FormattedText>
+											<FormattedString>
+												<Span Text="{Binding Measure}" FontAttributes="Bold" />
+												<Span Text=" " />
+												<Span Text="{Binding Name}" />
+											</FormattedString>
+										</Label.FormattedText>
+									</Label>
+								</Grid>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</Border>
+
+				<!-- Instructions Section -->
+				<Label Text="????? Instructions"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       Margin="0,25,0,10" />
+
+				<Border BackgroundColor="#F8F8F8"
+                        Stroke="LightGray"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10"
+                        Padding="15">
+					<Label x:Name="InstructionsLabel"
+                           FontSize="15"
+                           LineBreakMode="WordWrap"
+                           TextColor="#333"
+                           LineHeight="1.4" />
+				</Border>
+
+			</VerticalStackLayout>
+
+		</VerticalStackLayout>
+	</ScrollView>
+
+</ContentPage>

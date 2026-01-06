@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MealPlanner.Pages.RecipeBrowserPage"
+             Title="Browse Recipes">
+
+	<Grid RowDefinitions="Auto,Auto,Auto,*" Padding="15">
+
+		<!-- Tab Buttons -->
+		<Grid Grid.Row="0" 
+              ColumnDefinitions="*,*" 
+              ColumnSpacing="10"
+              Margin="0,0,0,15">
+
+			<Border Grid.Column="0"
+                    x:Name="SearchTabBorder"
+                    BackgroundColor="#4CAF50"
+                    Stroke="#4CAF50"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 10">
+				<Button Text="🔍 Search"
+                        Clicked="OnSearchTabClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontAttributes="Bold" />
+			</Border>
+
+			<Border Grid.Column="1"
+                    x:Name="FavoritesTabBorder"
+                    BackgroundColor="White"
+                    Stroke="LightGray"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 10">
+				<Button Text="⭐ Favorites"
+                        Clicked="OnFavoritesTabClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="Gray"
+                        FontAttributes="Bold" />
+			</Border>
+		</Grid>
+
+		<!-- Search Section (visible when Search tab active) -->
+		<VerticalStackLayout Grid.Row="1" 
+                            x:Name="SearchSection"
+                            Spacing="10"
+                            IsVisible="True">
+
+			<SearchBar x:Name="SearchBar"
+                       Placeholder="Search recipes (e.g., pasta, chicken)..."
+                       SearchButtonPressed="OnSearchPressed" />
+
+			<HorizontalStackLayout Spacing="10">
+				<Button Text="Search by Name"
+                        Clicked="OnSearchPressed"
+                        BackgroundColor="#4CAF50"
+                        TextColor="White"
+                        FontSize="14"
+                        Padding="15,10" />
+
+				<Button Text="Random Recipe"
+                        Clicked="OnRandomClicked"
+                        BackgroundColor="#9C27B0"
+                        TextColor="White"
+                        FontSize="14"
+                        Padding="15,10" />
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
+
+		<!-- Results Label and Loading -->
+		<Grid Grid.Row="2" Margin="0,10">
+			<Label x:Name="ResultLabel"
+                   Text="Enter a search term to find recipes"
+                   FontSize="16"
+                   TextColor="Gray"
+                   HorizontalOptions="Start" />
+
+			<ActivityIndicator x:Name="LoadingIndicator"
+                              IsRunning="False"
+                              IsVisible="False"
+                              Color="#4CAF50"
+                              HorizontalOptions="End" />
+		</Grid>
+
+		<!-- Recipe List (for both search results and favorites) -->
+		<CollectionView x:Name="RecipeCollectionView"
+                        Grid.Row="3"
+                        SelectionMode="Single"
+                        SelectionChanged="OnRecipeSelected">
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<Border Margin="0,0,0,15" 
+                            Padding="12" 
+                            Stroke="LightGray"
+                            StrokeThickness="1"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12">
+						<Border.Shadow>
+							<Shadow Brush="Black" Opacity="0.15" Radius="8" Offset="0,2" />
+						</Border.Shadow>
+
+						<Grid ColumnDefinitions="100,*" ColumnSpacing="12">
+
+							<!-- Recipe Image -->
+							<Border Grid.Column="0"
+                                    StrokeShape="RoundRectangle 8"
+                                    StrokeThickness="0"
+                                    HeightRequest="100"
+                                    WidthRequest="100">
+								<Image Source="{Binding ImageUrl}"
+                                       Aspect="AspectFill" />
+							</Border>
+
+							<!-- Recipe Info -->
+							<VerticalStackLayout Grid.Column="1" 
+                                                VerticalOptions="Center"
+                                                Spacing="6">
+								<Label Text="{Binding Name}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2" />
+
+								<Label Text="{Binding Category}"
+                                       FontSize="14"
+                                       TextColor="Gray" />
+
+								<Label Text="Tap to view details"
+                                       FontSize="12"
+                                       TextColor="#4CAF50"
+                                       FontAttributes="Italic" />
+							</VerticalStackLayout>
+
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+
+			<!-- Empty View -->
+			<CollectionView.EmptyView>
+				<VerticalStackLayout HorizontalOptions="Center" 
+                                    VerticalOptions="Center"
+                                    Spacing="10">
+					<Label x:Name="EmptyIcon"
+                           Text="📭"
+                           FontSize="48"
+                           HorizontalTextAlignment="Center" />
+					<Label x:Name="EmptyTitle"
+                           Text="No recipes found"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="Gray"
+                           HorizontalTextAlignment="Center" />
+					<Label x:Name="EmptyMessage"
+                           Text="Try a different search term"
+                           FontSize="14"
+                           TextColor="LightGray"
+                           HorizontalTextAlignment="Center" />
+				</VerticalStackLayout>
+			</CollectionView.EmptyView>
+		</CollectionView>
+
+	</Grid>
+
+</ContentPage>
